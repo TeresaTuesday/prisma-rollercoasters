@@ -12,6 +12,12 @@ const resolvers = {
     post(parent, { id }, ctx, info) {
       return ctx.db.query.post({ where: { id: id } }, info)
     },
+    coaster(parent, args, ctx, info) {
+      return ctx.db.query.coaster({}, info)
+    },
+    allCoasters(parent, {}, ctx, info) {
+      return ctx.db.query.coasters({}, info)
+    },
   },
   Mutation: {
     createDraft(parent, { title, text }, ctx, info) {
@@ -20,8 +26,17 @@ const resolvers = {
         info,
       )
     },
+    createCoaster(parent, { name, struc, height, imgURL }, ctx, info) {
+      return ctx.db.mutation.createCoaster(
+        { data: { name, struc, height, imgURL } },
+        info,
+      )
+    },
     deletePost(parent, { id }, ctx, info) {
       return ctx.db.mutation.deletePost({where: { id } }, info)
+    },
+    deleteCoaster(parent, { id }, ctx, info) {
+      return ctx.db.mutation.deleteCoaster({}, info)
     },
     publish(parent, { id }, ctx, info) {
       return ctx.db.mutation.updatePost(

@@ -4,10 +4,15 @@ type Query {
   feed: [Post!]!
   drafts: [Post!]!
   post(id: ID!): Post
+  coaster(id: ID!): Coaster
+  allCoasters: [Coaster]
 }
 
 type Mutation {
   createDraft(title: String!, text: String): Post
   deletePost(id: ID!): Post
   publish(id: ID!): Post
+  createCoaster(name: String!, struc: String!, height: Float! imgURL: String): Coaster
+  deleteCoaster(id: ID!): Coaster
+  updateCoaster(name: String!, struc: String!, height: Float! imgURL: String): Coaster
 }

@@ -5,7 +5,10 @@ type Post {
   text: String!
 }
 
-type coaster {
+type Coaster {
   id: ID! @unique
   name: String!
+  struc: String!
+  height: Float!
+  imgURL: String
 }

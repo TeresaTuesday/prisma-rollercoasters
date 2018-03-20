@@ -5,6 +5,13 @@
 # Model Types
 #
 
+type Coaster implements Node {
+  id: ID!
+  name: String!
+  struc: String!
+  imgURL: String
+}
+
 type Post implements Node {
   id: ID!
   isPublished: Boolean!
@@ -16,6 +23,10 @@ type Post implements Node {
 #
 # Other Types
 #
+
+type AggregateCoaster {
+  count: Int!
+}
 
 type AggregatePost {
   count: Int!
@@ -29,6 +40,331 @@ type BatchPayload {
 }
 
 """
+A connection to a list of items.
+"""
+type CoasterConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [CoasterEdge]!
+  aggregate: AggregateCoaster!
+}
+
+input CoasterCreateInput {
+  name: String!
+  struc: String!
+  imgURL: String
+}
+
+"""
+An edge in a connection.
+"""
+type CoasterEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Coaster!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum CoasterOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  struc_ASC
+  struc_DESC
+  imgURL_ASC
+  imgURL_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CoasterPreviousValues {
+  id: ID!
+  name: String!
+  struc: String!
+  imgURL: String
+}
+
+type CoasterSubscriptionPayload {
+  mutation: MutationType!
+  node: Coaster
+  updatedFields: [String!]
+  previousValues: CoasterPreviousValues
+}
+
+input CoasterSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CoasterSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CoasterSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CoasterWhereInput
+}
+
+input CoasterUpdateInput {
+  name: String
+  struc: String
+  imgURL: String
+}
+
+input CoasterWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [CoasterWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [CoasterWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  name: String
+  """
+  All values that are not equal to given value.
+  """
+  name_not: String
+  """
+  All values that are contained in given list.
+  """
+  name_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  name_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  name_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  name_lte: String
+  """
+  All values greater than the given value.
+  """
+  name_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  name_gte: String
+  """
+  All values containing the given string.
+  """
+  name_contains: String
+  """
+  All values not containing the given string.
+  """
+  name_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  name_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  name_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  name_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  name_not_ends_with: String
+  struc: String
+  """
+  All values that are not equal to given value.
+  """
+  struc_not: String
+  """
+  All values that are contained in given list.
+  """
+  struc_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  struc_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  struc_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  struc_lte: String
+  """
+  All values greater than the given value.
+  """
+  struc_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  struc_gte: String
+  """
+  All values containing the given string.
+  """
+  struc_contains: String
+  """
+  All values not containing the given string.
+  """
+  struc_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  struc_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  struc_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  struc_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  struc_not_ends_with: String
+  imgURL: String
+  """
+  All values that are not equal to given value.
+  """
+  imgURL_not: String
+  """
+  All values that are contained in given list.
+  """
+  imgURL_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  imgURL_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  imgURL_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  imgURL_lte: String
+  """
+  All values greater than the given value.
+  """
+  imgURL_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  imgURL_gte: String
+  """
+  All values containing the given string.
+  """
+  imgURL_contains: String
+  """
+  All values not containing the given string.
+  """
+  imgURL_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  imgURL_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  imgURL_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  imgURL_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  imgURL_not_ends_with: String
+}
+
+input CoasterWhereUniqueInput {
+  id: ID
+}
+
+"""
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 """
@@ -36,11 +372,17 @@ scalar Long
 
 type Mutation {
   createPost(data: PostCreateInput!): Post!
+  createCoaster(data: CoasterCreateInput!): Coaster!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateCoaster(data: CoasterUpdateInput!, where: CoasterWhereUniqueInput!): Coaster
   deletePost(where: PostWhereUniqueInput!): Post
+  deleteCoaster(where: CoasterWhereUniqueInput!): Coaster
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertCoaster(where: CoasterWhereUniqueInput!, create: CoasterCreateInput!, update: CoasterUpdateInput!): Coaster!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
+  updateManyCoasters(data: CoasterUpdateInput!, where: CoasterWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
+  deleteManyCoasters(where: CoasterWhereInput!): BatchPayload!
 }
 
 enum MutationType {
@@ -360,8 +702,11 @@ input PostWhereUniqueInput {
 
 type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  coasters(where: CoasterWhereInput, orderBy: CoasterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Coaster]!
   post(where: PostWhereUniqueInput!): Post
+  coaster(where: CoasterWhereUniqueInput!): Coaster
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  coastersConnection(where: CoasterWhereInput, orderBy: CoasterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoasterConnection!
   """
   Fetches an object given its ID
   """
@@ -373,4 +718,5 @@ type Query {
 
 type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  coaster(where: CoasterSubscriptionWhereInput): CoasterSubscriptionPayload
 }
